@@ -1,0 +1,84 @@
+* {
+	box-sizing: border-box;
+}
+
+p,
+h3,
+h1 {
+	margin: 0;
+}
+
+body {
+	background: #f9f9f9;
+}
+
+.contenedor-movimiento h1 {
+	color: #4f4e4ee6;
+	font-size: 40px;
+	font-weight: 600;
+	text-align: center;
+	padding: 20px 0 40px 0;
+}
+
+.table .row.header .cell {
+	color: #fff;
+}
+
+.main-movimiento {
+	display: flex;
+	justify-content: center;
+}
+
+.contenedor-movimiento {
+	width: 90%;
+	max-width: 1000px;
+}
+
+.contenedor-movimiento .table {
+	width: 100%;
+	background: #fff;
+	height: 500px;
+	overflow: auto;
+	border-radius: 50px;
+	margin-bottom: 30px;
+}
+
+.modificarMovimiento {
+	text-decoration: none;
+	color: #000;
+	opacity: 0.6;
+	transition: all 0.3s ease-in-out;
+}
+
+.modificarMovimiento:hover {
+	opacity: 1;
+}
+
+.contenedor-movimiento .table .row {
+	/* background: #fff; */
+	border-bottom: 1px solid #ccc;
+}
+
+.contenedor-movimiento .table .row.header {
+	background-color: #000;
+}
+
+.contenedor-movimiento .table .cell {
+	display: inline-block;
+	padding: 20px 0;
+	font-size: 14px;
+	color: rgba(0, 0, 0, 0.6);
+	text-align: center;
+}
+
+.w-10 {
+	width: 10%;
+}
+
+.w-20 {
+	width: 19%;
+}
+
+.w-40 {
+	width: 40%;
+}

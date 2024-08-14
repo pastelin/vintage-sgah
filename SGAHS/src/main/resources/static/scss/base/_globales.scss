@@ -1,0 +1,105 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+html {
+	font-size: 62.5%;
+	box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
+}
+
+body {
+	font-family: v.$fuente_principal;
+	font-size: 1.6rem;
+}
+
+p {
+	font-size: 1.6rem;
+	color: v.$negro;
+	line-height: 1.7;
+}
+
+a {
+	text-decoration: none !important;
+	font-size: 1.7rem;
+}
+
+h1,
+h2,
+h3 {
+	margin: 2rem 0 5rem 0;
+}
+
+h1 {
+	font-size: 4rem;
+}
+
+h2 {
+	font-size: 3.6rem;
+}
+
+h3 {
+	font-size: 3rem;
+}
+
+img {
+	min-width: 100%;
+	display: block;
+	height: auto;
+	width: 100%;
+}
+
+.contenedor-dashboard {
+	gap: 2rem;
+	min-height: 100vh;
+	max-height: 100vh;
+
+	@include m.desktop {
+		display: flex;
+	}
+}
+
+.hidden {
+	display: none;
+}
+
+.centrar-elemento {
+	margin: auto;
+}
+
+.alertas {
+    position: relative;
+
+    .alerta {
+        position: absolute;
+        margin-top: 2rem;
+        border-radius: .5rem;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 1rem;
+        transition: all .3s ease-in-out;
+		p {
+			color: v.$blanco;
+			font-size: 1.8rem;
+            margin-bottom: 0;
+            padding: .5rem;
+		}
+	}
+	.success {
+		background-color: v.$verde;
+	}
+
+    .info {
+        background-color: v.$azul;
+    }
+
+    .error {
+        background-color: v.$rojo;
+    }
+}
+

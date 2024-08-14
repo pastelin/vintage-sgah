@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div class="contenedor-detalle" th:fragment="detalle-gasto">
+			<h2>Detalle Gasto</h2>
+
+			<form class="form-filtro" id="formFiltroGasto" th:action="@{/filtro/detalleGasto}" method="post">
+				<div class="campo">
+					<select class="campo__field" name="" id="elegirFiltro">
+						<option value="">Seleccione un filtro</option>
+						<option value="fecha">Fecha</option>
+						<option value="categoria">Categoría</option>
+						<option value="tipo">Tipo</option>
+					</select>
+				</div>
+
+				<div class="campo hidden" id="contenedorFechaInicio">
+					<label for="fechaInicio">Inicio</label>
+					<input class="fechaFiltro" type="date" name="fechaInicio" id="fechaInicio" />
+				</div>
+
+				<div class="campo hidden" id="contenedorFechaFin">
+					<label for="fechaFin">Fin</label>
+					<input class="fechaFiltro" type="date" name="fechaFin" id="fechaFin" />
+				</div>
+
+				<div class="campo hidden" id="contenedorSelectCategoria">
+				</div>
+
+				<div class="campo hidden" id="contenedorSelectTipo">
+				</div>
+
+				<button type="submit" class="boton boton-filtrar">
+					<svg
+						width="14"
+						height="14"
+						viewBox="0 0 24 24"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<path
+							fill-rule="evenodd"
+							clip-rule="evenodd"
+							d="M18.319 14.4326C20.7628 11.2941 20.542 6.75347 17.6569 3.86829C14.5327 0.744098 9.46734 0.744098 6.34315 3.86829C3.21895 6.99249 3.21895 12.0578 6.34315 15.182C9.22833 18.0672 13.769 18.2879 16.9075 15.8442C16.921 15.8595 16.9351 15.8745 16.9497 15.8891L21.1924 20.1317C21.5829 20.5223 22.2161 20.5223 22.6066 20.1317C22.9971 19.7412 22.9971 19.1081 22.6066 18.7175L18.364 14.4749C18.3493 14.4603 18.3343 14.4462 18.319 14.4326ZM16.2426 5.28251C18.5858 7.62565 18.5858 11.4246 16.2426 13.7678C13.8995 16.1109 10.1005 16.1109 7.75736 13.7678C5.41421 11.4246 5.41421 7.62565 7.75736 5.28251C10.1005 2.93936 13.8995 2.93936 16.2426 5.28251Z"
+							fill="currentColor"
+						/>
+					</svg>
+				</button>
+			</form>
+
+			<div style="display: flex; justify-content: space-around">
+				<h3>
+					Disponible: $<span
+						th:text="${#numbers.formatDecimal(totalGastoDisponible, 0, 'COMMA', 2, 'POINT')}"
+					></span>
+				</h3>
+				<h3 style="color: red">
+					Gastado: $<span
+						th:text="${#numbers.formatDecimal(montoGastado, 0, 'COMMA', 2, 'POINT')}"
+					></span>
+				</h3>
+			</div>
+
+			<a class="boton boton-enviar" th:href="@{/dashboard/formGasto}"> Agregar Gasto </a>
+
+			<div class="contenedor-table">
+				<table class="table table-hover">
+					<thead class="table-primary">
+						<tr>
+							<th>Fecha</th>
+							<th>Monto</th>
+							<th>Descripción</th>
+							<th>Categoría</th>
+							<th>Tipo</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="gastoItem : ${gastos}">
+							<td class="descripcion" th:text="${gastoItem.fechaCreacion}"></td>
+							<td class="descripcion">
+								$<span
+									th:text="${#numbers.formatDecimal(gastoItem.monto, 0, 'COMMA', 2, 'POINT')}"
+								></span>
+							</td>
+							<td class="descripcion" th:text="${gastoItem.descripcion}"></td>
+							<td class="descripcion" th:text="${gastoItem.nbGastoRecurrente}"></td>
+							<td class="descripcion" th:text="${gastoItem.nbTipoMovimiento}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<script th:src="@{/js/detalles/detalleGasto.js}"></script>
+		</div>
+	</body>
+</html>

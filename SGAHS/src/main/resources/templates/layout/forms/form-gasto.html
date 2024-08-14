@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div class="contenedor-formulario" th:fragment="form-gasto">
+			<a class="boton boton-enviar" th:href="@{/dashboard/formGastoRecurrente}">
+				Modificar Gastos Recurrentes
+			</a>
+
+			<div class="contenido-form">
+				<h3>Formulario Gasto</h3>
+
+				<p class="mensaje-importante">
+					Monto máximo a gastar: 
+					$<span th:text="${#numbers.formatDecimal(totalGastoDisponible, 0, 'COMMA', 2, 'POINT')}"></span>
+				</p>
+
+				<p class="mensaje-importante" th:if="${hasMessageError}" th:text="${messageError}">
+				</p>
+
+				<form method="post" th:action="@{/dashboard/agregarGasto}" th:object="${gasto}">
+					<div class="campo">
+						<label for="monto">Monto</label>
+						<input type="number" th:field="*{monto}" id="monto" />
+						<span
+							class="mensaje-error"
+							th:if="${#fields.hasErrors('monto')}"
+							th:errors="*{monto}"
+						>
+						</span>
+					</div>
+
+					<div class="campo">
+						<select th:field="*{cdGastoRecurrente}">
+							<option value="" selected>Seleccione el tipo de gasto</option>
+							<option
+								th:each="gastoRecurrente: ${gastosRecurrentes}"
+								th:value="${gastoRecurrente.cdGasto}"
+								th:text="${gastoRecurrente.nbGasto}"
+							></option>
+						</select>
+						<span
+							class="mensaje-error"
+							th:if="${#fields.hasErrors('cdGastoRecurrente')}"
+							th:errors="*{cdGastoRecurrente}"
+						>
+						</span>
+					</div>
+
+					<div class="campo">
+						<label for="descripcion">Descripción</label>
+						<textarea th:field="*{descripcion}" id="descripcion"></textarea>
+						<span
+							class="mensaje-error"
+							th:if="${#fields.hasErrors('descripcion')}"
+							th:errors="*{descripcion}"
+						>
+						</span>
+					</div>
+
+					<div>
+						<input type="submit" value="Agregar" class="boton boton-enviar" />
+					</div>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

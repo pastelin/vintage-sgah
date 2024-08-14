@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div class="contenedor-formulario" th:fragment="form-ahorro">
+			<div class="contenido-form">
+				<h3>Formulario Ahorro</h3>
+
+				<form method="post" th:action="@{/dashboard/agregarAhorro}" th:object="${ahorro}">
+					<div class="campo">
+						<label for="monto">Monto</label>
+						<input type="number" th:field="*{monto}" id="monto" />
+						<span
+							class="mensaje-error"
+							th:if="${#fields.hasErrors('monto')}"
+							th:errors="*{monto}"
+						>
+						</span>
+					</div>
+
+					<div class="campo">
+						<label for="descripcion">Descripción</label>
+						<textarea th:field="*{descripcion}" id="descripcion"></textarea>
+						<span
+							class="mensaje-error"
+							th:if="${#fields.hasErrors('descripcion')}"
+							th:errors="*{descripcion}"
+						>
+						</span>
+					</div>
+
+					<div>
+						<input type="submit" value="Agregar" class="boton boton-enviar" />
+					</div>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

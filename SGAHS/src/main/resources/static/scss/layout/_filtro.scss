@@ -1,0 +1,30 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.form-filtro {
+	@include m.grid(1, 1rem);
+
+	@include m.tablet {
+		@include m.grid(2, 1rem);
+	}
+
+	@include m.desktop {
+		@include m.grid(3, 1rem);
+	}
+
+	@include m.desktopXL {
+		@include m.grid(4, 3rem);
+	}
+
+	.campo__field, .fechaFiltro {
+		flex: 1;
+		border: 3px solid v.$gris;
+		border-radius: 0.4rem;
+		&:focus {
+			border-color: v.$negroClaro;
+			outline: none;
+			-webkit-box-shadow: 0 0 0 4px rgb(0 206 122 / 20%);
+			box-shadow: 0 0 0 4px rgb(0 206 122 / 20%);
+		}
+	}
+}

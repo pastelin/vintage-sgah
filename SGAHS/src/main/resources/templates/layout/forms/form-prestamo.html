@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div class="contenedor-formulario" th:fragment="form-prestamo">
+			
+			<div class="contenido-form">
+				<h3>Formulario Prestamo</h3>
+
+				<p class="mensaje-importante" th:if="${movimiento == 'agrega'}">
+					Monto máximo a tomar prestado: 
+					$<span th:text="${#numbers.formatDecimal(totalAhorro, 0, 'COMMA', 2, 'POINT')}"></span>
+				</p>
+
+				<form method="post" th:action="@{/dashboard/agregarPrestamo}" th:object="${prestamo}">
+					<p class="mensaje-importante" th:if="${movimiento == 'actualiza'}">
+						Monto máximo a pagar por prestamo: <span th:text="*{montoPrestado - montoPagado}"></span>
+					</p>
+
+					<p class="mensaje-importante" th:if="${hasMessageError}" th:text="${messageError}">
+					</p>
+
+					<div class="campo" th:if="${movimiento == 'agrega'}">
+						<label for="monto">Monto</label>
+						<input type="number" th:field="*{montoPrestado}" id="monto" />
+						<span
+							class="mensaje-error"
+							th:if="${#fields.hasErrors('montoPrestado')}"
+							th:errors="*{montoPrestado}"
+						>
+					</div>
+
+					<div class="campo" th:if="${movimiento == 'actualiza'}">
+						<label for="montoPagado">Monto a Pagar</label>
+						<input type="number" th:field="*{montoPagado}" id="montoPagado" />
+					</div>
+
+					<div class="campo">
+						<label for="descripcion">Descripción</label>
+						<textarea th:field="*{descripcion}" id="descripcion"></textarea>
+						<span
+							class="mensaje-error"
+							th:if="${#fields.hasErrors('descripcion')}"
+							th:errors="*{descripcion}"
+						>
+					</div>
+
+					<div>
+						<input type="submit" value="Agregar" class="boton boton-enviar" />
+					</div>
+
+					<input type="hidden" th:field="*{folio}">
+					<input type="hidden" th:field="*{montoPrestado}">
+					<input type="hidden" th:field="*{fechaCreacion}">
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

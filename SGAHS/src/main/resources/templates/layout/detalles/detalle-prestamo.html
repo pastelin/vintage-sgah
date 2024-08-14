@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div class="contenedor-detalle" th:fragment="detalle-prestamo">
+			<h2>Detalle Prestamo</h2>
+
+			<div class="filtro">
+				<form class="form-filtro" action="">
+					<div class="campo">
+						<select name="" id="">
+							<option value="">Seleccione un filtro</option>
+							<option value="">Fecha descendiente</option>
+							<option value="">Fecha ascendente</option>
+						</select>
+					</div>
+
+					<div class="campo">
+						<select name="" id="">
+							<option value="">Seleccione un filtro</option>
+							<option value="">Compras</option>
+							<option value="">Apartado para gastos</option>
+						</select>
+					</div>
+
+					<div class="campo">
+						<select name="" id="">
+							<option value="">Seleccione un filtro</option>
+							<option value="">Activo</option>
+							<option value="">deshabilitado</option>
+						</select>
+					</div>
+					<input type="submit" value="Filtrar" class="boton-table boton-filtrar" />
+				</form>
+
+				<h3>Total: 
+					$<span th:text="${#numbers.formatDecimal(totalPrestamo, 0, 'COMMA', 2, 'POINT')}"></span>
+				</h3>
+			</div>
+
+			<a class="boton boton-enviar" th:href="@{/dashboard/formPrestamo/} + 'sinFolio' ">
+				Agregar Prestamo
+			</a>
+
+			<div class="contenedor-table">
+				<table class="table table-hover">
+					<thead class="table-primary">
+						<tr>
+							<th>Fecha</th>
+							<th>Monto Pretamo</th>
+							<th>Descripción</th>
+							<th>Monto Pagado</th>
+							<th>Realizar Pago</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="prestamoItem : ${prestamos}">
+							<td th:text="${prestamoItem.fechaCreacion}"></td>
+							<td>$<span th:text="${#numbers.formatDecimal(prestamoItem.montoPrestado, 0, 'COMMA', 2, 'POINT')}"></span></td>
+							<td class="descripcion" th:text="${prestamoItem.descripcion}"></td>
+							<td>$<span th:text="${#numbers.formatDecimal(prestamoItem.montoPagado, 0, 'COMMA', 2, 'POINT')}"></span></td>
+							<td>
+								<a
+									class="boton-table boton-actualizar"
+									th:if="${prestamoItem.cdEstatus == 1}"
+									th:href="@{/dashboard/formPrestamo/} + ${prestamoItem.folio}"
+									>Pagar
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</body>
+</html>

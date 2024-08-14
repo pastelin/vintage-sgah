@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div class="contenedor-detalle" th:fragment="detalle-inversion">
+			<h2>Detalle Inversion</h2>
+
+			<div class="filtro">
+				<form class="form-filtro" action="">
+					<div class="campo">
+						<select name="" id="">
+							<option value="">Seleccione un filtro</option>
+							<option value="">Fecha descendiente</option>
+							<option value="">Fecha ascendente</option>
+						</select>
+					</div>
+
+					<div class="campo">
+						<select name="" id="">
+							<option value="">Seleccione un filtro</option>
+							<option value="">Compras</option>
+							<option value="">Apartado para gastos</option>
+						</select>
+					</div>
+
+					<div class="campo">
+						<select name="" id="">
+							<option value="">Seleccione un filtro</option>
+							<option value="">Activo</option>
+							<option value="">deshabilitado</option>
+						</select>
+					</div>
+					<input type="submit" value="Filtrar" class="boton-table boton-filtrar" />
+				</form>
+
+				<h3>Total: 
+					$<span th:text="${#numbers.formatDecimal(totalInversion, 0, 'COMMA', 2, 'POINT')}"></span>
+				</h3>
+			</div>
+
+			<a class="boton boton-enviar" th:href="@{/dashboard/formInversion/} + 'sinFolio'">
+				Agregar Inversion
+			</a>
+
+			<div class="contenedor-table">
+				<table class="table table-hover">
+					<thead class="table-primary">
+						<tr>
+							<th>Fecha</th>
+							<th>Monto</th>
+							<th>Descripción</th>
+							<th>App</th>
+							<th>Retirar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="inversionItem : ${inversiones}">
+							<td th:text="${inversionItem.fechaCreacion}"></td>
+							<td>$<span th:text="${#numbers.formatDecimal(inversionItem.monto, 0, 'COMMA', 2, 'POINT')}"></span></td>
+							<td class="descripcion" th:text="${inversionItem.descripcion}"></td>
+							<td th:text="${inversionItem.cdAppInversion}"></td>
+							<td>
+								<a
+									class="boton-table boton-actualizar"
+									th:if="${inversionItem.monto != 0}"
+									th:href="@{/dashboard/formInversion/} + ${inversionItem.folio}"
+									>Retirar</a
+								>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</body>
+</html>

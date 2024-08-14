@@ -1,0 +1,146 @@
+   .boton {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  line-height: 40px;
+  font-family: 'Work Sans';
+  /* font-size: 20px; */
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: 0.1s ease all;
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  color: #00000088;
+  padding: 0 20px;
+}
+
+.btn-style1 span {
+	position: relative;
+	z-index: 2;
+	transition: 0.3s ease all;
+}
+
+.btn-style1::after {
+  content: '';
+  background: #384d54;
+  height: 300px;
+  width: 100%;
+  transition: .4s ease-in-out all;
+  top: -300px;
+  left: 0;
+  position: absolute;
+  border-radius: 0 0 300px 300px;
+  z-index: 1;
+  border: transparent;
+}
+
+.btn-style1:hover::after {
+  top: 0;
+  color: #fff;
+}
+
+.boton.btn-style1:hover {
+  color: #fff;
+}
+
+/* Estilos boton 2 */
+
+.btn-style2,
+.btn-style2-back {
+  width: 200px;
+}
+
+.btn-style2 span,
+.btn-style2-back span {
+  transition: .4s ease-in-out all;
+  position: absolute;
+  left: 35%;
+}
+
+
+.btn-style2 .icono,
+.btn-style2-back .icono {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  z-index: 2;
+  left: -40px;
+  transition: .3s ease-in-out all;
+  opacity: 0;
+}
+
+.btn-style2 svg,
+.btn-style2-back svg {
+  color: #fff;
+  width: 20px;
+  height: 20px;
+}
+
+.btn-style2:hover {
+  background: #ff4c4c;
+}
+
+.btn-style2-back:hover {
+  background: #0099e5;
+}
+
+.btn-style2:hover .icono,
+.btn-style2-back:hover .icono {
+  left: calc(100% - 50px);
+  opacity: 1;
+}
+
+.btn-style2:hover span,
+.btn-style2-back:hover span {
+  left: 20px;
+  color: #fff;
+}
+
+
+
+.btn-rect {
+  background: none;
+  color: #00000088;
+}
+
+.btn-rect svg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  fill: none;
+}
+
+.btn-rect rect {
+  width: 100%;
+  height: 100%;
+  stroke: #000;
+  stroke-width: 5px;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  transition: .6s ease  all;
+}
+
+.btn-rect:hover rect {
+  stroke-dashoffset: 0;
+}
+
+
+
+
+
+/* Estilos personalizados */
+
+.btn-opciones nav > button {
+  background: #0db7ed;
+  color: #fff;
+}
+
+.btn-center {
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div class="contenedor-formulario" th:fragment="form-inversion">
+			<div class="contenido-form">
+				<h3>Formulario Inversion</h3>
+				
+				<form method="post" th:action="@{/dashboard/agregarInversion}" th:object="${inversion}">
+					<p class="mensaje-importante" th:if="${movimiento == 'actualiza'}">
+						Monto máximo a retirar: 
+						$<span th:text="*{#numbers.formatDecimal(monto, 0, 'COMMA', 2, 'POINT')}"></span>
+					</p>
+
+					<p class="mensaje-importante" th:if="${hasMessageError}" th:text="${messageError}">
+					</p>
+
+					<div class="campo" th:if="${movimiento == 'agrega'}">
+						<label for="monto">Monto</label>
+						<input type="number" id="monto" th:field="*{monto}" />
+						<span
+							class="mensaje-error"
+							th:if="${#fields.hasErrors('monto')}"
+							th:errors="*{monto}"
+						>
+					</div>
+
+					<div class="campo" th:if="${movimiento == 'actualiza'}">
+						<label for="montoRetirado">Monto a retirar</label>
+						<input type="number" id="montoRetirado" name="montoRetirado" />
+					</div>
+
+					<div class="campo" th:if="${movimiento == 'agrega'}">
+						<select th:field="*{cdAppInversion}">
+							<option value="">-- Seleccionar app invesión --</option>
+							<option
+								th:each="catalogoInversion: ${catalogoInversiones}"
+								th:text="${catalogoInversion.nbAppInversion}"
+								th:value="${catalogoInversion.cdAppInversion}"
+							></option>
+						</select>
+						<span
+							class="mensaje-error"
+							th:if="${#fields.hasErrors('cdAppInversion')}"
+							th:errors="*{cdAppInversion}"
+						>
+					</div>
+
+					<div class="campo">
+						<label for="descripcion">Descripción</label>
+						<textarea id="descripcion" th:field="*{descripcion}"></textarea>
+						<span
+							class="mensaje-error"
+							th:if="${#fields.hasErrors('descripcion')}"
+							th:errors="*{descripcion}"
+						>
+					</div>
+
+					<input type="submit" value="Agregar" class="boton boton-enviar" />
+
+					<input type="hidden" th:field="*{folio}">
+					<input type="hidden" th:field="*{cdAppInversion}">
+					<input type="hidden" th:field="*{monto}">
+					<input type="hidden" th:field="*{fechaCreacion}">
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

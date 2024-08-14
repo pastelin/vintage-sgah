@@ -1,0 +1,69 @@
+@use 'base/variables' as v;
+
+.sidebar {
+    position: relative;
+    background-color: v.$negro;
+    min-width: 28.8rem;
+    height: 100vh;
+}
+
+.sidebar-logo {
+    h1 {
+        font-size: 2.4rem;
+        color: v.$blanco;
+        text-align: center;
+        margin: 3.6rem 0 4.8rem 0;
+    }
+}
+
+.sidebar-user {
+    h2 {
+        font-size: 2.3rem;
+        color: v.$blanco;
+        margin: 0 0 4.8rem 0;
+        text-align: center;
+        font-weight: 300;
+    }
+}
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow-x: hidden;
+
+    a{
+        color: v.$blanco;
+        font-size: 1.4rem;
+        height: 4rem;
+        cursor: pinter;
+        margin-left: .8rem;
+        display: flex;
+        justify-items: center;
+
+        span {
+            margin-left: 8.8rem;
+        }
+    }
+
+    button {
+        display: flex;
+        width: 27.2rem;
+        height: 4.8rem;
+        align-items: center;
+        justify-content: center;
+        color: v.$blanco;
+        font-weight: bold;
+        font-size: 1.4rem;
+        border-radius: .4rem;
+        background-color: v.$negroClaro;
+        transition: all .25s ease-in;
+        margin: 4rem auto;
+
+        &:hover {
+            color: v.$negro;
+            background-color: v.$blanco;
+        }
+    }
+    
+}

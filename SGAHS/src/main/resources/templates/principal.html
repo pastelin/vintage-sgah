@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" th:href="@{/css/style.css}" />
+	</head>
+	<body>
+		<header class="header">
+			<div class="contenedor__formulario">
+				<div class="cabecero-ahorro">
+					<form
+						th:action="@{/agregarMonto}"
+						method="post"
+						th:object="${administrarIngreso}"
+					>
+						<label class="fw-bold" for="ingresoInicial">Ingreso Mensual</label>
+
+						<input
+							class="campo__field h-30"
+							type="number"
+							id="ingresoInicial"
+							th:field="*{montoInicial}"
+						/>
+
+						<button class="boton boton--agregar w-7">Actualizar</button>
+
+						<div
+							th:if="${#fields.hasErrors('montoInicial')}"
+							th:errors="*{montoInicial}"
+							class="message-error"
+						></div>
+					</form>
+					<!-- <form th:action="@{/resetearMonto}" method="post">
+						<button th:if="${!montoInicial.isEnabled}" class="boton boton--agregar w-7">
+							Resetear
+						</button>
+					</form> -->
+				</div>
+
+				<h3 class="no-margin fw-bold">
+					Disponible:
+					<span class="rojo" th:text="${administrarIngreso.montoInicial}"></span>
+				</h3>
+			</div>
+		</header>
+
+		<main class="contenedor">
+			<!-- Inicia form para el apartado de gastos -->
+			<form
+				th:action="@{/gasto/guardar}"
+				class="formulario"
+				th:object="${gasto}"
+				method="post"
+			>
+				<!-- Inicio de partado para gastos -->
+				<h2>Gastos</h2>
+
+				<div class="contenedor__formulario">
+					<div class="campo">
+						<label class="campo__label" for="gastoMonto">Monto</label>
+						<input
+							class="campo__field"
+							type="number"
+							id="gastoMonto"
+							th:field="*{monto}"
+						/>
+						<div
+							th:if="${#fields.hasErrors('monto')}"
+							th:errors="*{monto}"
+							class="message-error"
+						></div>
+					</div>
+
+					<div class="campo">
+						<label class="campo__label" for="descripcionGasto"
+							>Descripci&oacute;n</label
+						>
+						<textarea
+							class="campo__field campo__field--textarea"
+							id="descripcionGasto"
+							th:field="*{descripcion}"
+						></textarea>
+						<div
+							th:if="${#fields.hasErrors('descripcion')}"
+							th:errors="*{descripcion}"
+							class="message-error"
+						></div>
+					</div>
+				</div>
+
+				<!-- Inicia apartado de gastos recurrentes -->
+				<h3 class="mb-5">Lista de gastos recurrentes</h3>
+
+				<div class="contenedor__formulario">
+					<div class="campo">
+						<label class="" for="nuevoTipoGasto">Tipo de gasto</label>
+						<input class="campo__field" type="text" />
+					</div>
+					<div class="campo">
+						<button class="boton boton--agregar">Agregar</button>
+					</div>
+				</div>
+
+				<table class="table table-striped my-5">
+					<thead class="table-dark">
+						<tr>
+							<th>Activo</th>
+							<th>Descripci&oacute;n</th>
+							<th>Monto</th>
+							<th>Modificar</th>
+							<th>Eliminar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<div class="form-check form-switch mb-3">
+									<input
+										class="form-check-input"
+										type="checkbox"
+										id="isGastoActivo"
+									/>
+								</div>
+							</td>
+							<td>Gasto en casa</td>
+							<td>500</td>
+							<td><button class="boton boton--agregar">Modificar</button></td>
+							<td><button class="boton boton--eliminar">Eliminar</button></td>
+						</tr>
+
+						<tr>
+							<td>Total:</td>
+							<td colspan="3">$300</td>
+						</tr>
+					</tbody>
+				</table>
+				<!-- Finaliza apartado de gastos recurrentes -->
+
+				<div class="campo">
+					<input class="boton boton--guardar" type="submit" value="Guardar" />
+				</div>
+				<div>
+					<p>Total: <span th:text="${administrarIngreso.montoGasto}"></span></p>
+				</div>
+				<!-- Finaliza partado para gastos -->
+			</form>
+
+			<!-- Incia form del apartado para pago de prestamos -->
+			<form
+				th:action="@{/guardar/prestamo}"
+				class="formulario"
+				th:object="${prestamo}"
+				method="post"
+				id="formPrestamo"
+			>
+				<div class="contenedor__formulario">
+					<div class="form-check form-switch mb-3">
+						<input class="form-check-input" type="checkbox" id="checkPrestamo" />
+						<label class="form-check-label">Pago de prestamo</label>
+					</div>
+				</div>
+
+				<div>
+					<p>Total: <span th:text="${administrarIngreso.montoPrestamo}"></span></p>
+				</div>
+
+				<div
+					class="contenedor__formulario contenedor__formulario--desactivado"
+					id="divPrestamo"
+				>
+					<div class="campo">
+						<select class="campo__field h-30" id="selectPrestamo" th:field="*{folio}">
+							<option value="" selected>Seleccione una opcion</option>
+							<option
+								th:each="itemPrestamo: ${prestamos}"
+								th:value="${itemPrestamo.folio}"
+								th:text="${itemPrestamo.montoPrestado}"
+							></option>
+						</select>
+					</div>
+
+					<div class="campo">
+						<p class="no-margin">
+							Monto a pagar: <span id="montoPrestadoSpan" class="rojo"></span>
+						</p>
+					</div>
+
+					<div class="campo">
+						<label class="campo__label" for="pagoPrestamo">Monto</label>
+						<input
+							class="campo__field"
+							type="number"
+							id="pagoPrestamo"
+							th:field="*{montoPagado}"
+						/>
+					</div>
+
+					<div class="campo">
+						<label class="campo__label" for="descripcionPrestamo"
+							>Descripci&oacute;n</label
+						>
+						<textarea
+							class="campo__field campo__field--textarea"
+							id="descripcionPrestamo"
+							name="descripcion"
+						></textarea>
+					</div>
+
+					<div class="campo">
+						<input class="boton boton--guardar" type="submit" value="Guardar" />
+					</div>
+				</div>
+
+				<input type="hidden" id="cdEstatus" name="cdEstatus" />
+				<input type="hidden" id="fechaCreacion" name="fechaCreacion" />
+				<input type="hidden" id="montoPrestado" name="montoPrestado" />
+			</form>
+			<!-- Finaliza form del apartado para pago de prestamos -->
+
+			<!-- Inicia form para el apartado para inversiones -->
+			<form
+				th:action="@{/ahorro/agregarInversion}"
+				th:object="${inversion}"
+				class="formulario"
+				method="post"
+			>
+				<div class="form-check form-switch mb-3">
+					<input class="form-check-input" type="checkbox" id="inversionAhorro" />
+					<label class="form-check-label" for="inversionAhorro">Invertir</label>
+				</div>
+
+				<div>
+					<p>Total: <span th:text="${administrarIngreso.montoInversion}"></span></p>
+				</div>
+
+				<div
+					class="contenedor__formulario contenedor__formulario--desactivado"
+					id="divInversionAhorro"
+				>
+					<div class="campo">
+						<label class="campo__label" for="inversionMonto">Monto</label>
+						<input
+							class="campo__field"
+							type="number"
+							id="inversionMonto"
+							th:field="*{monto}"
+						/>
+					</div>
+
+					<div class="campo">
+						<label class="campo__label" for="inversionDescripcion"
+							>Descripci&oacute;n</label
+						>
+						<textarea
+							class="campo__field campo__field--textarea"
+							id="inversionDescripcion"
+							th:field="*{descripcion}"
+						></textarea>
+					</div>
+
+					<div class="campo">
+						<select id="catalogoInversion" th:field="*{cdAppInversion}">
+							<option value="">-- Seleccionar --</option>
+							<option
+								th:each="catalogoInversion: ${listaCatalogoInversion}"
+								th:text="${catalogoInversion.nbAppInversion}"
+								th:value="${catalogoInversion.cdAppInversion}"
+							></option>
+						</select>
+					</div>
+
+					<div class="campo">
+						<button class="boton boton--agregar">Agregar</button>
+					</div>
+				</div>
+			</form>
+			<!-- Finaliza form para el apartado para inversiones -->
+
+			<!-- Inicia form para el apartado de ahorro -->
+			<form
+				class="formulario"
+				th:action="@{/ahorro/guardar}"
+				th:object="${ahorro}"
+				method="post"
+			>
+				<h2>Ahorro</h2>
+
+				<div class="contenedor__formulario">
+					<div class="campo">
+						<label class="campo__label" for="ahorroMonto">Monto</label>
+						<input
+							class="campo__field"
+							type="number"
+							id="ahorroMonto"
+							th:field="*{monto}"
+						/>
+						<div
+							th:if="${#fields.hasErrors('monto')}"
+							th:errors="*{monto}"
+							class="message-error"
+						></div>
+					</div>
+
+					<div class="campo">
+						<label class="campo__label" for="ahorroDescripcion"
+							>Descripci&oacute;n</label
+						>
+						<textarea
+							class="campo__field campo__field--textarea"
+							id="ahorroDescripcion"
+							th:field="*{descripcion}"
+						></textarea>
+						<div
+							th:if="${#fields.hasErrors('descripcion')}"
+							th:errors="*{descripcion}"
+							class="message-error"
+						></div>
+					</div>
+				</div>
+
+				<div class="campo">
+					<input class="boton boton--guardar" type="submit" value="Guardar" />
+				</div>
+				<div>
+					<p>Total: <span th:text="${administrarIngreso.montoAhorro}"></span></p>
+				</div>
+			</form>
+			<!-- Inicia form para el apartado de ahorro -->
+		</main>
+		<script th:src="@{/js/principal.js}"></script>
+	</body>
+</html>

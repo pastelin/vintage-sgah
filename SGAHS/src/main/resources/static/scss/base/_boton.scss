@@ -1,0 +1,68 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.boton {
+	display: inline-block;
+	padding: 1rem 2rem;
+	border-radius: 0.5rem;
+	border: none;
+	font-size: 2rem;
+	transition: all 0.3s ease-in-out;
+}
+
+.boton-table,
+.boton-small {
+	display: inline-block;
+	padding: 0.5rem 1rem;
+	border-radius: 0.5rem;
+	border: none;
+	font-size: 1.2rem;
+	transition: all 0.3s ease-in-out;
+
+	@include m.tablet {
+		font-size: 1.6rem;
+	}
+}
+
+.boton-enviar {
+	background-color: v.$azul;
+	color: v.$blanco;
+	&:hover {
+		opacity: 0.8;
+		color: v.$blanco;
+	}
+}
+
+.boton-actualizar {
+	background-color: v.$verde;
+	color: v.$negroClaro;
+	&:hover {
+		color: v.$negro;
+		opacity: 0.8;
+	}
+}
+
+.boton-filtrar {
+	background-color: v.$negroClaro;
+	color: v.$blanco;
+	width: 7rem;
+    margin-left: 2rem;
+    height: 4rem;
+	&:hover {
+		color: v.$blanco;
+		opacity: 0.8;
+	}
+}
+
+.boton-cerrar {
+	background-color: v.$negroClaro;
+	color: v.$blanco;
+	&:hover {
+		color: v.$blanco;
+		opacity: 0.8;
+	}
+}
+
+.centrar-btn {
+	margin: auto;
+}
